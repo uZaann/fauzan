@@ -45,12 +45,31 @@
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         
+        /* === FIX SCROLL GANDA YANG BENAR === */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* PASTIKAN BODY BISA SCROLL NORMAL */
+        body {
+            overflow-y: auto;
+        }
+
         /* NAVBAR STYLING - DIPERBAIKI */
         .navbar-fixed {
             background: rgba(13, 17, 23, 0.98) !important;
             border-bottom: 1px solid #30363d;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: 80px;
         }
 
         .nav-container {
@@ -61,6 +80,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
+            height: 80px;
         }
 
         .nav-logo {
@@ -100,6 +120,7 @@
             font-size: 0.85rem;
             white-space: nowrap;
             flex-shrink: 0;
+            text-decoration: none;
         }
 
         .nav-link::after {
@@ -165,13 +186,14 @@
             right: 0;
             background: rgba(13, 17, 23, 0.98);
             border-top: 1px solid #30363d;
-            z-index: 50;
+            z-index: 1000;
             padding: 8px 4px;
             display: none;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            height: 70px;
         }
 
         .mobile-nav-container {
@@ -181,6 +203,7 @@
             align-items: center;
             flex-wrap: nowrap;
             overflow: hidden;
+            height: 100%;
         }
 
         .nav-item {
@@ -243,13 +266,6 @@
             border-radius: 0 0 2px 2px;
         }
 
-        /* FIX UNTUK MENCEGAH SCROLL HORIZONTAL */
-        body {
-            overflow-x: hidden;
-            position: relative;
-            width: 100%;
-        }
-
         .mobile-nav-header {
             display: none;
             position: fixed;
@@ -258,10 +274,11 @@
             right: 0;
             background: rgba(13, 17, 23, 0.98);
             border-bottom: 1px solid #30363d;
-            z-index: 50;
+            z-index: 1000;
             padding: 12px 16px;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+            height: 60px;
         }
         
         /* CARD TIRAI BESAR HANYA DI HOME */
@@ -272,7 +289,7 @@
             width: 100%;
             height: 100%;
             background: #161b22;
-            z-index: 1000;
+            z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -301,11 +318,6 @@
                 transform: translateX(-100%);
                 opacity: 0;
             }
-        }
-        
-        main {
-            padding-top: 80px;
-            padding-bottom: 80px;
         }
         
         /* VIBE CODING TAMBAHAN */
@@ -363,12 +375,14 @@
             min-height: 80vh;
             display: flex;
             align-items: center;
+            padding: 2rem 0;
         }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
+            margin: 2rem 0;
         }
         
         .feature-card {
@@ -380,7 +394,14 @@
             border-color: #58a6ff;
             transform: translateY(-5px);
         }
-        
+
+        /* FIX UNTUK MENCEGAH SCROLL HORIZONTAL */
+        body {
+            overflow-x: hidden;
+            position: relative;
+            width: 100%;
+        }
+
         /* IMPROVEMENTS FOR MOBILE */
         @media (max-width: 768px) {
             .mobile-bottom-nav {
@@ -389,16 +410,21 @@
             .mobile-nav-header {
                 display: flex;
             }
+            
+            /* Adjust main content for mobile - FIXED */
             main {
-                padding-top: 60px;
-                padding-bottom: 70px;
+                margin-top: 60px;
+                padding-bottom: 80px; /* Space for bottom nav */
             }
+            
             .hero-section {
-                min-height: 60vh;
+                min-height: auto;
+                padding: 1rem 0;
             }
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.75rem;
+                margin: 1rem 0;
             }
             
             /* Improved mobile typography */
@@ -498,6 +524,30 @@
         * {
             box-sizing: border-box;
         }
+
+        /* MAIN CONTENT STYLING */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #161b22;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #58a6ff;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-[#0d1117] code-bg">
@@ -526,8 +576,8 @@
         </div>
     </div>
 
-    <!-- NAVBAR ATAS (DESKTOP) - DIPERBAIKI -->
-    <nav class="navbar-fixed fixed w-full z-40 py-3 hidden md:block">
+    <!-- NAVBAR ATAS (DESKTOP) - SUDAH DIPERBAIKI -->
+    <nav class="navbar-fixed hidden md:block">
         <div class="nav-container">
             <!-- Logo -->
             <div class="nav-logo">
@@ -584,7 +634,7 @@
         </div>
     </div>
 
-    <!-- NAVBAR BAWAH (MOBILE) - DIPERBAIKI -->
+    <!-- NAVBAR BAWAH (MOBILE) - SUDAH DIPERBAIKI -->
     <nav class="mobile-bottom-nav md:hidden">
         <div class="mobile-nav-container">
             <a href="index.html" class="nav-item active">
@@ -614,8 +664,8 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="pb-16">
+    <!-- MAIN CONTENT - BISA SCROLL NORMAL -->
+    <main>
         <!-- HERO SECTION -->
         <section class="hero-section">
             <div class="container mx-auto px-4 md:px-6">
@@ -697,7 +747,7 @@
                 </div>
 
                 <!-- QUICK STATS -->
-                <div class="stats-grid mb-12 md:mb-16">
+                <div class="stats-grid">
                     <div class="terminal p-4 md:p-6 text-center feature-card" data-aos="zoom-in" data-aos-delay="100">
                         <div class="text-xl md:text-2xl font-bold text-[#58a6ff]">25+</div>
                         <div class="text-[#8b949e] text-xs md:text-sm">Proyek Selesai</div>
@@ -717,7 +767,7 @@
                 </div>
 
                 <!-- FEATURED PROJECTS PREVIEW -->
-                <div class="terminal p-4 md:p-6 mb-8 md:mb-12" data-aos="fade-up">
+                <div class="terminal p-4 md:p-6 my-12" data-aos="fade-up">
                     <div class="flex space-x-2 mb-4 md:mb-6">
                         <div class="terminal-btn btn-close"></div>
                         <div class="terminal-btn btn-min"></div>
@@ -753,7 +803,7 @@
                 </div>
 
                 <!-- CODE SNIPPET SECTION -->
-                <div class="terminal p-4 md:p-6" data-aos="fade-up">
+                <div class="terminal p-4 md:p-6 my-12" data-aos="fade-up">
                     <div class="flex space-x-2 mb-4 md:mb-6">
                         <div class="terminal-btn btn-close"></div>
                         <div class="terminal-btn btn-min"></div>
@@ -775,6 +825,27 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- EXTRA CONTENT UNTUK TEST SCROLL -->
+                <div class="terminal p-6 my-12" data-aos="fade-up">
+                    <div class="flex space-x-2 mb-4">
+                        <div class="terminal-btn btn-close"></div>
+                        <div class="terminal-btn btn-min"></div>
+                        <div class="terminal-btn btn-max"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Test Scroll Area</h3>
+                    <p class="text-[#8b949e] text-center">Ini konten tambahan untuk test scroll. Coba scroll ke bawah!</p>
+                </div>
+
+                <div class="terminal p-6 my-12" data-aos="fade-up">
+                    <div class="flex space-x-2 mb-4">
+                        <div class="terminal-btn btn-close"></div>
+                        <div class="terminal-btn btn-min"></div>
+                        <div class="terminal-btn btn-max"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">More Content</h3>
+                    <p class="text-[#8b949e] text-center">Masih bisa scroll? Bagus!</p>
+                </div>
             </div>
         </section>
     </main>
@@ -789,76 +860,26 @@
         offset: 100
     });
 
-    // PERBAIKAN SET ACTIVE NAV STATE
-    function setActiveNav() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const navLinks = document.querySelectorAll('.nav-link');
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        // Remove active class from all
-        navLinks.forEach(link => link.classList.remove('active'));
-        navItems.forEach(item => item.classList.remove('active'));
-        
-        // Add active class based on current page
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === currentPage) {
-                link.classList.add('active');
-            }
-        });
-        
-        navItems.forEach(item => {
-            const href = item.getAttribute('href');
-            if (href === currentPage) {
-                item.classList.add('active');
-            }
-        });
-        
-        // Fallback untuk home page
-        if (currentPage === '' || currentPage === '/') {
-            const homeLinks = document.querySelectorAll('a[href="index.html"]');
-            const homeItems = document.querySelectorAll('a[href="index.html"].nav-item');
-            homeLinks.forEach(link => link.classList.add('active'));
-            homeItems.forEach(item => item.classList.add('active'));
-        }
-    }
-
-    // FIX UNTUK SCROLL YANG NYANGKUT
+    // FIX UNTUK SCROLL - YANG BENAR
     function fixScrollIssues() {
-        // Prevent horizontal scroll
+        // Pastikan body bisa scroll normal
+        document.body.style.overflowY = 'auto';
+        document.documentElement.style.overflowY = 'auto';
+        
+        // Prevent horizontal scroll saja
         document.body.style.overflowX = 'hidden';
         document.documentElement.style.overflowX = 'hidden';
-        
-        // Smooth scroll behavior
-        document.documentElement.style.scrollBehavior = 'smooth';
-        
-        // Fix for scroll jumping
-        let scrollTimeout;
-        window.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function() {
-                window.scrollTo({
-                    top: window.scrollY,
-                    left: 0,
-                    behavior: 'auto'
-                });
-            }, 10);
-        });
     }
 
     // Fix navbar z-index issues
     function fixNavbarZIndex() {
         const navbar = document.querySelector('.navbar-fixed');
-        if (navbar) {
-            navbar.style.zIndex = '9999';
-        }
+        const mobileNav = document.querySelector('.mobile-bottom-nav');
+        const mobileHeader = document.querySelector('.mobile-nav-header');
         
-        // Ensure content doesn't overlap navbar
-        const main = document.querySelector('main');
-        if (main) {
-            main.style.position = 'relative';
-            main.style.zIndex = '1';
-        }
+        if (navbar) navbar.style.zIndex = '1000';
+        if (mobileNav) mobileNav.style.zIndex = '1000';
+        if (mobileHeader) mobileHeader.style.zIndex = '1000';
     }
 
     // ANIMASI CARD HANYA SEKALI SAJA
@@ -886,12 +907,6 @@
             curtainCard.style.display = 'none';
         }
 
-        // Setup page transitions
-        setupPageTransitions();
-        
-        // Set active state based on current page
-        setActiveNav();
-        
         // Fix scroll issues
         fixScrollIssues();
         fixNavbarZIndex();
@@ -931,61 +946,6 @@
         // Mulai typing setelah delay
         setTimeout(typeLine, 1500);
     });
-
-    // PAGE TRANSITION SYSTEM
-    function setupPageTransitions() {
-        // Tambahkan overlay untuk animasi
-        const overlay = document.createElement('div');
-        overlay.id = 'page-transition-overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0d1117;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease-in-out;
-        `;
-        document.body.appendChild(overlay);
-
-        // Handle semua link internal
-        const links = document.querySelectorAll('a[href]');
-        
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            
-            // Skip external links dan link ke halaman yang sama
-            if (href.startsWith('http') || href === '#' || href === window.location.pathname.split('/').pop()) {
-                return;
-            }
-            
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('href');
-                
-                // Animasi keluar
-                overlay.style.opacity = '1';
-                overlay.style.pointerEvents = 'all';
-                
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 400);
-            });
-        });
-
-        // Animasi masuk saat halaman dimuat
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.pointerEvents = 'none';
-                }, 400);
-            }, 100);
-        });
-    }
 
     // Additional resize handler
     window.addEventListener('resize', function() {
